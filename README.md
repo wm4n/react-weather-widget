@@ -1,6 +1,6 @@
 # React Weather Widget
 
-This project builds a Weather Widget using React and aims to provide the exact same functionalities as the one shown in the Google search. It's for learning React so probably many are implemented incorrectly so please bear with me 😆.
+This project builds a Weather Widget using React and aims to provide the exact same functionalities as the one shown in the Google search. It's for React learning purpose. Therefore, probably many are implemented incorrectly so please bear with me 😆.
 
 ## Weather Widget in Google Search Result
 
