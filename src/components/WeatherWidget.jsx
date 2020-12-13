@@ -1,99 +1,80 @@
-// WeatherWidget Component
-
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import styled from 'styled-components';
 import WeatherBannerTab from './WeatherBannerTab';
 import MiniWeatherCard from './MiniWeatherCard';
 
-class WeatherWidget extends React.Component {
-  static renderEmpty() {
-    return (
-      <div>
-        <h3>No forecast!? Check your props data!</h3>
-      </div>
-    );
-  }
-  constructor(props) {
-    super(props);
-    const { forecast } = props;
-    if (forecast) {
-      let firstMomentOfDay;
-      let forecastOfDay = [];
-      const forecastOfDayList = [];
-      forecast.forEach((item, index) => {
-        if (firstMomentOfDay === undefined) {
-          firstMomentOfDay = moment.unix(item.dt);
-          forecast[index].moment = firstMomentOfDay;
+const WeatherWidget = ({ config, forecast }) => {
+  const [forecastIdx, setForecastIdx] = useState(0);
+
+  if (forecast !== undefined && forecast.length > 0) {
+    let firstMomentOfDay;
+    let forecastOfDay = [];
+    const forecastOfDayList = [];
+    /* eslint-disable no-param-reassign */
+    forecast.forEach((item, index) => {
+      if (firstMomentOfDay === undefined) {
+        firstMomentOfDay = moment.unix(item.dt);
+        forecast[index].moment = firstMomentOfDay;
+        forecastOfDay.push(item);
+      } else {
+        const currentMoment = moment.unix(item.dt);
+        forecast[index].moment = currentMoment;
+        if (firstMomentOfDay.isSame(currentMoment, 'day')) {
           forecastOfDay.push(item);
         } else {
-          const currentMoment = moment.unix(item.dt);
-          forecast[index].moment = currentMoment;
-          if (firstMomentOfDay.isSame(currentMoment, 'day')) {
-            forecastOfDay.push(item);
-          } else {
-            forecastOfDayList.push(forecastOfDay);
-            forecastOfDay = [];
-            forecastOfDay.push(item);
-            firstMomentOfDay = currentMoment;
-          }
+          forecastOfDayList.push(forecastOfDay);
+          forecastOfDay = [];
+          forecastOfDay.push(item);
+          firstMomentOfDay = currentMoment;
         }
-      });
-      this.state = { forecastIdx: 0, forecastOfDayList };
-    } else {
-      this.state = {};
-    }
-  }
-
-  render() {
-    const { config, forecast } = this.props;
-    if (!forecast) {
-      return this.renderEmpty();
-    }
-    const forecastList = this.state.forecastOfDayList;
+      }
+    });
+    /* eslint-enable no-param-reassign */
+    const forecastList = forecastOfDayList;
     return (
       <ContentContainer>
         <WeatherBannerTab
           className=""
           location={config.location}
-          forecastOfDay={forecastList[this.state.forecastIdx]}
+          forecastOfDay={forecastList[forecastIdx]}
           unit={config.unit}
           locale={config.locale}
         />
         <Next5Container>
           <MiniWeatherCard
-            onClick={() => this.setState({ forecastIdx: 0 })}
+            onClick={() => setForecastIdx(0)}
             forecastList={forecastList[0]}
-            isSelected={this.state.forecastIdx === 0}
+            isSelected={forecastIdx === 0}
             unit={config.unit}
             locale={config.locale}
           />
           <MiniWeatherCard
-            onClick={() => this.setState({ forecastIdx: 1 })}
+            onClick={() => setForecastIdx(1)}
             forecastList={forecastList[1]}
-            isSelected={this.state.forecastIdx === 1}
+            isSelected={forecastIdx === 1}
             unit={config.unit}
             locale={config.locale}
           />
           <MiniWeatherCard
-            onClick={() => this.setState({ forecastIdx: 2 })}
+            onClick={() => setForecastIdx(2)}
             forecastList={forecastList[2]}
-            isSelected={this.state.forecastIdx === 2}
+            isSelected={forecastIdx === 2}
             unit={config.unit}
             locale={config.locale}
           />
           <MiniWeatherCard
-            onClick={() => this.setState({ forecastIdx: 3 })}
+            onClick={() => setForecastIdx(3)}
             forecastList={forecastList[3]}
-            isSelected={this.state.forecastIdx === 3}
+            isSelected={forecastIdx === 3}
             unit={config.unit}
             locale={config.locale}
           />
           <MiniWeatherCard
-            onClick={() => this.setState({ forecastIdx: 4 })}
+            onClick={() => setForecastIdx(4)}
             forecastList={forecastList[4]}
-            isSelected={this.state.forecastIdx === 4}
+            isSelected={forecastIdx === 4}
             unit={config.unit}
             locale={config.locale}
           />
@@ -101,12 +82,18 @@ class WeatherWidget extends React.Component {
       </ContentContainer>
     );
   }
-}
+  return (
+    <div>
+      <h3>No forecast data available!</h3>
+    </div>
+  );
+};
 
 WeatherWidget.defaultProps = {
   config: PropTypes.arrayOf({
     unit: 'metric',
   }),
+  forecast: [],
 };
 
 WeatherWidget.propTypes = {
@@ -122,12 +109,12 @@ WeatherWidget.propTypes = {
       clouds: PropTypes.number.isRequired,
       wind: PropTypes.number.isRequired,
     }),
-  ).isRequired,
+  ),
   config: PropTypes.shape({
     location: PropTypes.string.isRequired,
     unit: PropTypes.string,
     locale: PropTypes.string,
-  }).isRequired,
+  }),
 };
 
 const ContentContainer = styled.div`

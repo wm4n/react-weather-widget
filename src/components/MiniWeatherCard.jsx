@@ -1,15 +1,29 @@
-// MiniWeatherCard component
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import styled from 'styled-components';
 import iconCodeMapping from '../WeatherIcon';
 
-const MiniWeatherCard = ({ onClick, forecastList, isSelected, unit, locale }) => {
+/**
+ * Render a daily cards containing a weather icon and the minimum and maximum temperature
+ *
+ * @param {function} onClick clicking callback
+ * @param {object[]} forecastList forecast data to render
+ * @param {boolean} isSelected render whether it's selected or not
+ * @param {string} unit the unit format for figures, only accepting 'metric' for now
+ * @param {string} locale locale for time formating
+ */
+const MiniWeatherCard = ({
+  onClick,
+  forecastList,
+  isSelected,
+  unit,
+  locale,
+}) => {
   if (forecastList !== undefined && forecastList.length > 0) {
     const first = forecastList[0];
-    const maxAndMin = forecastList.reduce(
+    // find maximum and minimum temperature of the given list
+    const tempMaxAndMin = forecastList.reduce(
       (acc, current) => {
         if (current.temp_max > acc.max) {
           acc.max = current.temp_max;
@@ -24,18 +38,17 @@ const MiniWeatherCard = ({ onClick, forecastList, isSelected, unit, locale }) =>
     return (
       <Root>
         <Container onClick={onClick} isSelected={isSelected}>
-          <Text>
-            {moment
-              .unix(first.dt)
-              .locale(locale)
-              .format('dddd')}
-          </Text>
+          <Text>{moment.unix(first.dt).locale(locale).format('dddd')}</Text>
           <Icon src={iconCodeMapping[first.icon]} />
           <Text>
-            {Math.round(maxAndMin.max * 10) / 10}&deg;{unit === 'metric' ? 'C' : 'F'}
+            {Math.round(tempMaxAndMin.max * 10) / 10}
+            &deg;
+            {unit === 'metric' ? 'C' : 'F'}
           </Text>
           <Text>
-            {Math.round(maxAndMin.min * 10) / 10}&deg;{unit === 'metric' ? 'C' : 'F'}
+            {Math.round(tempMaxAndMin.min * 10) / 10}
+            &deg;
+            {unit === 'metric' ? 'C' : 'F'}
           </Text>
         </Container>
       </Root>
@@ -49,6 +62,7 @@ MiniWeatherCard.defaultProps = {
   isSelected: false,
   unit: 'metric',
   locale: 'zh-tw',
+  forecastList: [],
 };
 
 MiniWeatherCard.propTypes = {
@@ -65,7 +79,7 @@ MiniWeatherCard.propTypes = {
       clouds: PropTypes.number.isRequired,
       wind: PropTypes.number.isRequired,
     }),
-  ).isRequired,
+  ),
   isSelected: PropTypes.bool,
   unit: PropTypes.string,
   locale: PropTypes.string,
@@ -83,8 +97,8 @@ const Container = styled.div`
   flex-direction: column;
   cursor: pointer;
   padding: 0.5rem 0.5rem;
-  background: ${props => (props.isSelected ? '#F9F9F9' : 'inherit')};
-  border: ${props => (props.isSelected ? '1px solid #DDDDDD' : 'none')};
+  background: ${(props) => (props.isSelected ? '#F9F9F9' : 'inherit')};
+  border: ${(props) => (props.isSelected ? '1px solid #DDDDDD' : 'none')};
 `;
 
 const Text = styled.div`
