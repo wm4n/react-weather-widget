@@ -15,8 +15,9 @@ import iconCodeMapping from '../WeatherIcon';
 const WeatherBanner = ({ forecastNow, unit, locale }) => (
   <div>
     <h5>
-      ${moment.unix(forecastNow.dt).locale(locale).format('dddd a h:mm')}, $
-      {forecastNow.desc}
+      {`${moment.unix(forecastNow.dt).locale(locale).format('dddd a h:mm')}, ${
+        forecastNow.desc
+      }`}
     </h5>
     <BannerContainer>
       <BannerIcon src={iconCodeMapping[forecastNow.icon]} />
