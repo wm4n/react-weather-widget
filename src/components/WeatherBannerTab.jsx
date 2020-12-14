@@ -13,19 +13,19 @@ import WeatherBanner from './WeatherBanner';
 
 const { Handle } = Slider;
 
-const WeatherBannerTab = (props) => {
+const WeatherBannerTab = ({ location, forecastOfDay, locale, unit }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
-  const renderTabPanel = (item, unit) => {
+  const renderTabPanel = (item, displayUnit) => {
     return (
       <TabPanel key={`tp${item.dt}`}>
-        <WeatherBanner forecastNow={item} unit={unit} />
+        <WeatherBanner forecastNow={item} unit={displayUnit} />
       </TabPanel>
     );
   };
 
-  const renderTab = (item, locale) => {
-    const localeRegion = locale || 'zh-tw';
+  const renderTab = (item, displayLocale) => {
+    const localeRegion = displayLocale || 'zh-tw';
     if (item) {
       return (
         <Tab key={`t${item.dt}`}>
@@ -51,7 +51,6 @@ const WeatherBannerTab = (props) => {
     );
   };
 
-  const { location, forecastOfDay, locale, unit } = props;
   const marks = {};
   forecastOfDay.forEach((item, index) => {
     marks[index] = item.moment.locale(locale).format('a h:mm');

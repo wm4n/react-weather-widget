@@ -7,13 +7,16 @@ import WeatherWidget from './components/WeatherWidget';
 // import testData from './testData.json';
 
 const App = () => {
+  const params = new URLSearchParams(window.location.search);
+  const city = params.get('city');
+
   const [forecast, setForecast] = useState([]);
 
   useEffect(() => {
     axios
       .get('https://api.openweathermap.org/data/2.5/forecast', {
         params: {
-          q: 'taipei',
+          q: city,
           lang: 'zh_tw',
           appid: 'a9a128fe49257140db578a429168289a',
           units: 'metric',
@@ -43,7 +46,7 @@ const App = () => {
   return (
     <div className="App">
       <WeatherWidget
-        config={{ location: '台北', unit: 'metric', locale: 'zh-tw' }}
+        config={{ location: city, unit: 'metric', locale: 'zh-tw' }}
         forecast={forecast}
       />
     </div>
