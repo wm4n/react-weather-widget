@@ -9,6 +9,7 @@ import WeatherWidget from './components/WeatherWidget';
 const App = () => {
   const params = new URLSearchParams(window.location.search);
   const city = params.get('city');
+  const cityLabel = params.get('city_label');
 
   const [forecast, setForecast] = useState([]);
 
@@ -46,7 +47,11 @@ const App = () => {
   return (
     <div className="App">
       <WeatherWidget
-        config={{ location: city, unit: 'metric', locale: 'zh-tw' }}
+        config={{
+          location: decodeURI(cityLabel),
+          unit: 'metric',
+          locale: 'zh-tw',
+        }}
         forecast={forecast}
       />
     </div>
