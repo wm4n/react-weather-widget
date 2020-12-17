@@ -35,7 +35,7 @@ const App = () => {
           params: {
             q: cityId,
             lang: 'zh_tw',
-            appid: 'a9a128fe49257140db578a429168289a',
+            appid: 'open weather map key here',
             units: 'metric',
           },
         },
