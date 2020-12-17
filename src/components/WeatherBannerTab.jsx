@@ -13,7 +13,13 @@ import WeatherBanner from './WeatherBanner';
 
 const { Handle } = Slider;
 
-const WeatherBannerTab = ({ location, forecastOfDay, locale, unit }) => {
+const WeatherBannerTab = ({
+  location,
+  forecastOfDay,
+  locale,
+  unit,
+  onLocationClick,
+}) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const renderTabPanel = (item, displayUnit) => {
@@ -58,7 +64,7 @@ const WeatherBannerTab = ({ location, forecastOfDay, locale, unit }) => {
 
   return (
     <Container>
-      <LocationText>{location}</LocationText>
+      <LocationText onClick={onLocationClick}>{location}</LocationText>
       <Tabs selectedIndex={tabIndex} onSelect={false}>
         {forecastOfDay.map((item) => renderTabPanel(item, unit))}
         <TabList style={{ display: 'none' }}>
