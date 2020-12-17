@@ -4,7 +4,9 @@ import './App.css';
 
 import WeatherWidget from './components/WeatherWidget';
 // mock data for testing without API call
-// import testData from './testData.json';
+import testData from './testData.json';
+
+const OPEN_WEATHER_MAP_KEY = '';
 
 const cities = [
   { city: 'taipei', label: '🇹🇼 台北' },
@@ -35,7 +37,7 @@ const App = () => {
           params: {
             q: cityId,
             lang: 'zh_tw',
-            appid: 'open weather map key here',
+            appid: OPEN_WEATHER_MAP_KEY,
             units: 'metric',
           },
         },
@@ -53,7 +55,24 @@ const App = () => {
       }));
       setForecast(transformData);
     } catch (err) {
-      setError(err.stack);
+      if (OPEN_WEATHER_MAP_KEY.length === 0) {
+        // Use mock data if no key
+        const transformData = await testData.list.map((data) => ({
+          dt: data.dt,
+          temp: data.main.temp,
+          temp_min: data.main.temp_min,
+          temp_max: data.main.temp_max,
+          humidity: data.main.humidity,
+          icon: data.weather[0].icon,
+          desc: data.weather[0].description,
+          clouds: data.clouds.all,
+          wind: data.wind.speed,
+        }));
+        setForecast(transformData);
+        setError('');
+      } else {
+        setError(err.stack);
+      }
     }
   };
 
