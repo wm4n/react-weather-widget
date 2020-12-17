@@ -16,6 +16,12 @@ There are still many to do...
 
 1. Grab the repo
 
+2. Add OpenWeatherMap key to [src/App.js](https://github.com/wm4n/react-weather-widget/blob/master/src/App.js). If no key provided, mock data is used for display.
+
+   ```jsx
+   const OPEN_WEATHER_MAP_KEY = '';
+   ```
+
 2. install
   
    `yarn install`
