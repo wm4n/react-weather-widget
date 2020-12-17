@@ -41,6 +41,7 @@ const WeatherWidget = ({ config, forecast }) => {
           forecastOfDay={forecastList[forecastIdx]}
           unit={config.unit}
           locale={config.locale}
+          onLocationClick={config.onLocationClick}
         />
         <Next5Container>
           <MiniWeatherCard

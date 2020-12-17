@@ -5,14 +5,12 @@
     ],
     "plugins": [
         "react",
-        "react-native",
         "jsx-a11y",
         "import"
     ],
     "env": {
         "browser": true,
-        "jest": true,
-        "react-native/react-native": true
+        "jest": true
     },
     "rules": {
         "no-use-before-define": "off",
