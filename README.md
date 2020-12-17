@@ -18,12 +18,12 @@ There are still many to do...
 
 2. install
   
-  `yarn install`
+   `yarn install`
   
 3. start and running in a browser
   
-  `yarn start`
+   `yarn start`
   
 4. build production code
   
-  `yarn build`
+   `yarn build`
