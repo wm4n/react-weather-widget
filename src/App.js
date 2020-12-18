@@ -9,16 +9,16 @@ import testData from './testData.json';
 const OPEN_WEATHER_MAP_KEY = '';
 
 const cities = [
-  { city: 'taipei', label: '🇹🇼 台北' },
-  { city: 'tokyo', label: '🇯🇵 東京' },
-  { city: 'moscow', label: '🇷🇺 莫斯科' },
-  { city: 'sydney', label: '🇦🇺 雪梨' },
-  { city: 'london', label: '🇬🇧 倫敦' },
-  { city: 'paris', label: '🇫🇷 巴黎' },
-  { city: 'mexico', label: '🇲🇽 墨西哥' },
-  { city: 'seattle', label: '🇺🇸 西雅圖' },
-  { city: 'washington', label: '🇺🇸 華盛頓' },
-  { city: 'beijing', label: '🇨🇳 北京' },
+  { city: 'taipei', label: '🇹🇼 Taipei' },
+  { city: 'tokyo', label: '🇯🇵 Tokyo' },
+  { city: 'moscow', label: '🇷🇺 Moscow' },
+  { city: 'sydney', label: '🇦🇺 Sydney' },
+  { city: 'london', label: '🇬🇧 London' },
+  { city: 'paris', label: '🇫🇷 Paris' },
+  { city: 'mexico', label: '🇲🇽 Mexico' },
+  { city: 'seattle', label: '🇺🇸 Seattle' },
+  { city: 'washington', label: '🇺🇸 Washington' },
+  { city: 'beijing', label: '🇨🇳 Beijing' },
 ];
 
 const App = () => {
